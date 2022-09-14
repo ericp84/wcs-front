@@ -1,7 +1,6 @@
 import React from 'react';
 
 const Skill = ({skills}) => {
-    /// skills === props.skills
     return (
         <>
             <ul className="skills">

@@ -1,9 +1,12 @@
+import './header.module.css';
 
 const Header = () => {
   return (
-    <div className="header">
-      <h1>Wilders</h1>
-    </div>
+    <header>
+      <div className="container">
+        <h1>Wilders Book</h1>
+      </div>
+    </header>
   );
 };
 

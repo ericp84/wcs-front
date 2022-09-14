@@ -1,15 +1,20 @@
-import { useEffect, useState } from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useEffect, useState, useCallback } from 'react';
 
 import Blank_Profile from '../../assets/Blank_Profile.png';
 import Skill from '../Skill/Skill';
 
-const WilderCard = ( props ) => {
-  const [wilders, setWilders] = useState([]);
+import './wilder.css'
 
-  const fetchData = async() => {
-    const request = await fetch('http://localhost:3000/api/wilders')
-    return await request.json();
-  }
+const WilderCard = () => {
+  const [wilders, setWilders] = useState([]);
+  const [id, setId] = useState(0);
+
+    const fetchData = useCallback(async() => {
+        const request = await fetch('http://localhost:3000/api/wilders')
+        const response = await request.json();
+        setWilders(response);
+      }, [id])
 
   useEffect(() => {
     const datas = async () => {
@@ -19,12 +24,25 @@ const WilderCard = ( props ) => {
       }
     }
     datas();
-  }, [])
+  }, [fetchData])
 
-  console.log(wilders)
+  const handleDelete = async (id) => {
+    setId(id)
+    await fetch(`http://localhost:3000/api/wilders/deleteone/${id}`, {
+      method: 'DELETE'
+    })
+  }
+
+  const handleUpdate = async (id) => {
+    setId(id)
+    await fetch(`http://localhost:3000/api/wilders/update/${id}`, {
+      method: 'PUT'
+    })
+  }
+
   const wilder = wilders.map((wild) => {
     return (
-      <article className="card">
+      <article className="card" key={wild.id}>
       <img src={Blank_Profile} alt="Jane Doe Profile" />
       <h3>{wild.name}</h3>
       <p>
@@ -35,8 +53,13 @@ const WilderCard = ( props ) => {
       </p>
       <h4>Wild Skills</h4>
       <Skill skills={wild.skills}/>
+      <button onClick={() => {handleDelete(wild.id)}}>
+          Delete
+      </button>
+      <button onClick={() => {handleUpdate(wild.id)}}>
+          Update
+      </button>
     </article>
-
     )
   })
   
