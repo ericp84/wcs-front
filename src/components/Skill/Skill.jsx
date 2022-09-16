@@ -1,14 +1,15 @@
 import React from 'react';
 
 const Skill = ({skills}) => {
+    console.log("🚀 ~ file: Skill.jsx ~ line 4 ~ Skill ~ skills", skills)
     return (
         <>
             <ul className="skills">
                 {skills.map((skill, i) => {
                     return (
                         <li key={i}>
-                            {skill.name}
-                            <span className="votes">3</span>
+                            {skill.skill.name}
+                            <span className="votes">{skill.upvote}</span>
                         </li>
                     )
                 })}

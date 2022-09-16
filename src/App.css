@@ -34,3 +34,10 @@ p {
   margin-right: auto;
   padding: 24px;
 }
+
+.btn-modal {
+  border-radius: 5px;
+  border: none;
+  background-color: rgb(255, 255, 255);
+  box-shadow: 3px 2px 20px red;
+}
