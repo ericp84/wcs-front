@@ -1,20 +1,29 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 const Skill = ({skills}) => {
-    console.log("🚀 ~ file: Skill.jsx ~ line 4 ~ Skill ~ skills", skills)
+    const [stackId, setStackId] = useState(0);
+
+     
+    const upcount = (id) => {
+        setStackId(id);
+        handleUpvote();
+    }
+    const handleUpvote = async () => {
+        await fetch(`http://localhost:3000/api/upvotes/${stackId}/upvote`)
+    }   
+
     return (
         <>
             <ul className="skills">
-                {skills.map((skill, i) => {
+                {skills.map((skill) => {
                     return (
-                        <li key={i}>
+                        <li key={skill.id} >
                             {skill.skill.name}
-                            <span className="votes">{skill.upvote}</span>
+                            <span className="votes" onClick={() => {upcount(skill.id)}} >{skill.upvote}</span>
                         </li>
                     )
                 })}
             </ul>
-
         </>
     );
 };
